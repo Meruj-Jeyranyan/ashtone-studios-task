@@ -11,11 +11,11 @@ import {
   Meta,
 } from "./Card.styles";
 
-const Card = ({ data }) => {
+const Card = ({ data, onClick }) => {
   return (
     <Container>
       {data?.map((item, index) => (
-        <CardContainer key={index}>
+        <CardContainer key={index} onClick={() => onClick(item)}>
           <Image src={item.img} alt={item.title} />
           <Tags>{item.tags}</Tags>
           <Title>{item.title}</Title>

@@ -54,13 +54,18 @@ export const MenuItem = styled.div`
   margin: 0 10px;
   position: relative;
   cursor: pointer;
+
+  span {
+    display: flex;
+    align-items: center;
+  }
 `;
 
 export const SubMenu = styled.div`
   display: ${(props) => (props.$isSubmenuOpen ? "block" : "none")};
   position: absolute;
   background-color: ${theme.colors.white};
-  padding: 0 10px;
+  padding: 4px 16px;
   z-index: 1000;
 
   width: 180px;
@@ -108,11 +113,22 @@ export const MobileMenu = styled.div`
   transform: ${(props) => (props.open ? "translateX(0)" : "translateX(-100%)")};
   transition: transform 0.3s ease;
   z-index: 1000;
+
+  .icon {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+  }
 `;
 
 export const MobileMenuItem = styled.div`
   padding: 10px;
   cursor: pointer;
+
+  &:hover {
+    margin-left: 12px;
+    color: ${theme.colors.gray};
+  }
 `;
 
 export const NavbarHeader = styled.div`

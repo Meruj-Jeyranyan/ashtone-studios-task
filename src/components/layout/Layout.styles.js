@@ -9,5 +9,6 @@ export const Container = styled.div`
 `;
 
 export const ChildrenWrapper = styled.div`
+  margin-top: calc(3rem + 110px);
   max-width: 1100px;
 `;

@@ -4,6 +4,7 @@ import useDebounce from "hooks/useDebounce";
 import { searchPosts } from "features/postSlice";
 import arrowRight from "assets/arrow-right.svg";
 import arrowDown from "assets/arrow-down.svg";
+import closeIcon from "assets/close-icon.svg";
 
 import Input from "../input/Input";
 import {
@@ -28,10 +29,12 @@ import logo from "assets/logo.svg";
 const menuItems = [
   {
     label: "Demos",
+    route: "/demos",
     subItems: ["SubItem 1", "SubItem 2"],
   },
   {
     label: "Post",
+    route: "/post",
     subItems: [
       "Post Header",
       "Post Layout",
@@ -42,18 +45,22 @@ const menuItems = [
   },
   {
     label: "Features",
+    route: "/features",
     subItems: ["SubItem 3", "SubItem 4"],
   },
   {
     label: "Categories",
+    route: "/categories",
     subItems: ["SubItem 5", "SubItem 6"],
   },
   {
     label: "Shop",
+    route: "/shop",
     subItems: ["SubItem 7", "SubItem 8"],
   },
   {
     label: "Buy Now",
+    route: "/buy-now",
   },
 ];
 
@@ -80,6 +87,8 @@ const Navbar = () => {
     const searchIcon = document.getElementById("input-show");
     const inputField = document.getElementById("input");
 
+    const menu = document.getElementById("menu-items");
+
     if (
       e.target.closest(".mobile-menu") === null &&
       e.target.closest(".burger-icon") === null
@@ -87,13 +96,20 @@ const Navbar = () => {
       setMenuOpen(false);
     }
 
+    !menu?.contains(e.target) && setOpenSubmenuIndex(null);
+
     if (!searchIcon?.contains(e.target) && !inputField?.contains(e.target)) {
       setShowSearch(false);
     }
   };
 
-  const handleOpenSubMenu = (index) => {
+  const handleOpenSubMenu = (index, label) => {
     setOpenSubmenuIndex((prevIndex) => (prevIndex === index ? null : index));
+    // navigate("/label");
+  };
+
+  const handleCloseMobileMenu = () => {
+    setMenuOpen(false);
   };
 
   useEffect(() => {
@@ -148,9 +164,14 @@ const Navbar = () => {
             />
           </Row>
         </NavbarHeader>
-        <MenuItems>
+        <MenuItems id="menu-items">
           {menuItems?.map((menuItem, index) => (
-            <MenuItem key={index} onClick={() => handleOpenSubMenu(index)}>
+            <MenuItem
+              key={index}
+              onClick={() =>
+                handleOpenSubMenu(index, menuItem.label, menuItem.route)
+              }
+            >
               <span>
                 {menuItem.label}
                 {menuItem?.subItems && <ArrowIcon src={arrowDown} alt="icon" />}
@@ -168,9 +189,17 @@ const Navbar = () => {
         </MenuItems>
       </NavbarContainer>
       <MobileMenu className="mobile-menu" open={menuOpen}>
-        <Logo src={logo} />
+        <div className="icon">
+          <Logo src={logo} />{" "}
+          <Logo src={closeIcon} onClick={handleCloseMobileMenu} />
+        </div>
         {menuItems?.map((menuItem, index) => (
-          <MobileMenuItem key={index} onClick={() => handleOpenSubMenu(index)}>
+          <MobileMenuItem
+            key={index}
+            onClick={() =>
+              handleOpenSubMenu(index, menuItem.label, menuItem.route)
+            }
+          >
             {menuItem.label}
             {menuItem.subItems?.map((subItem, subIndex) => (
               <MobileSubMenuItem

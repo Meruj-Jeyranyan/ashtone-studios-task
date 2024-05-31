@@ -1,80 +1,84 @@
-import styled, { keyframes } from "styled-components";
+import styled, { css } from "styled-components";
 import { theme } from "styles/styles.js";
 
-const slideUp = keyframes`
-  from {
-    top: 0;
-  }
-  to {
-    top: -120px;
-  }
-`;
-
-const slideDown = keyframes`
-  from {
-    top: -120px;
-  }
-  to {
-    top: 0;
-  }
-`;
-
-const slideIn = keyframes`
-  from {
-    transform: translateX(-100%);
-  }
-  to {
-    transform: translateX(0);
-  }
-`;
-
-const slideOut = keyframes`
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-100%);
-  }
-`;
-
-export const Container = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  position: sticky;
-  z-index: 99999999;
-  animation: ${(props) => (props.$isHidden ? slideUp : slideDown)} 0.5s forwards;
-`;
-
 export const NavbarContainer = styled.div`
+  position: fixed;
+  top: 0;
   width: 100%;
-  background: ${theme.colors.white};
+  background-color: ${theme.colors.white};
   color: ${theme.colors.primary};
   display: flex;
-  justify-content: center;
-  padding: ${theme.padding.medium} ${theme.padding.large};
-  border-bottom: 1px solid ${theme.colors.gray};
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.3s ease;
+  z-index: 1000;
+
+  ${(props) =>
+    props.$scrolled &&
+    css`
+      transform: translateY(-100%);
+    `}
+
+  @media (min-width: 768px) {
+    border-bottom: ${theme.borderBottom};
+    min-height: 110px;
+
+    &:nth-child(2) {
+      margin: 0 auto; /* Center the second item */
+      flex: 0 1 auto;
+    }
+  }
+
+  @media (max-width: 768px) {
+    justify-content: space-between;
+  }
+`;
+
+export const Logo = styled.img`
+  display: flex;
+  align-self: center;
+`;
+
+export const SearchIcon = styled.img`
+  cursor: pointer;
+`;
+
+export const MenuItems = styled.div`
+  display: flex;
+  align-items: center;
+  align-self: center;
+  margin: 14px;
 
   @media (max-width: 768px) {
     display: none;
   }
 `;
 
-export const Logo = styled.div`
-  font-size: ${theme.fontSize.medium};
-  background: ${theme.colors.white};
-  padding: 4px 12px;
-  font-weight: bold;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  height: 50px;
-  border-bottom: ${theme.borderBottom};
+export const MenuItem = styled.div`
+  margin: 0 10px;
+  cursor: pointer;
+  position: relative;
+
+  &:hover > div {
+    display: block;
+  }
 `;
 
-export const MenuIcon = styled.div`
+export const SubMenu = styled.div`
+  display: ${(props) => (props.$isSubmenuOpen ? "block" : "none")};
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #444;
+  padding: 10px;
+  z-index: 1000;
+
+  width: 150px;
+  margin-top: 5px;
+`;
+
+export const BurgerIcon = styled.img`
   display: none;
   cursor: pointer;
 
@@ -83,167 +87,60 @@ export const MenuIcon = styled.div`
   }
 `;
 
-export const MenuItems = styled.ul`
-  display: flex;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  cursor: pointer;
-`;
-
 export const MobileMenu = styled.div`
-  display: flex;
-  flex-direction: column;
+  padding: 32px;
   position: fixed;
-  bottom: 0;
+  top: 0;
   left: 0;
-  height: 100vh;
   width: 80%;
-  background: ${theme.colors.white};
-  align-items: center;
-  padding: ${theme.padding.large} ${theme.padding.medium};
-  transform: translateX(-100%);
-  animation: ${(props) => (props.$isOpen ? slideIn : slideOut)} 0.3s forwards;
-
-  hr {
-    width: 100%;
-    margin-top: 24px;
-  }
-
-  .mobile-menu {
-    /* background-color: red; */
-    border-bottom: ${theme.borderBottom};
-  }
+  height: 100%;
+  background-color: ${theme.colors.white};
+  color: ${theme.colors.primary};
+  transform: ${(props) => (props.open ? "translateX(0)" : "translateX(-100%)")};
+  transition: transform 0.3s ease;
+  z-index: 1000;
 `;
 
-export const SearchIcon = styled.div`
-  cursor: pointer;
-`;
-
-export const SearchInput = styled.input`
-  padding: ${theme.padding.small};
-  border: none;
-  border-radius: ${theme.borderRadius};
-  transition: width 0.3s;
-  width: ${(props) => (props.$isVisible ? "300px" : "0")};
-  visibility: ${(props) => (props.$isVisible ? "visible" : "hidden")};
-  opacity: ${(props) => (props.$isVisible ? "1" : "0")};
-  @media (max-width: 768px) {
-    width: ${(props) => (props.$isVisible ? "200px" : "0")};
-  }
-
-  @media (max-width: 500px) {
-    width: ${(props) => (props.$isVisible ? "150px" : "0")};
-  }
-
-  @media (max-width: 400px) {
-    width: ${(props) => (props.$isVisible ? "100px" : "0")};
-  }
-
-  &:focus {
-    outline: none;
-    border: none;
-  }
-`;
-
-export const SearchWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: end;
-  align-items: center;
-  gap: 12px;
-  min-width: 350px;
-
-  @media (max-width: 768px) {
-    min-width: 0;
-  }
-`;
-
-export const IconLogo = styled.img`
-  @media (min-width: 1000px) {
-    margin-left: calc(50% - 100px);
-  }
-`;
-
-export const MenuItem = styled.li`
-  margin: 0 ${theme.margin.medium};
-  position: relative;
-  cursor: pointer;
-
-  ul {
-    display: ${(props) => (props.$isSubmenuOpen ? "block" : "none")};
-  }
-
-  @media (max-width: 768px) {
-    margin: ${theme.margin.medium} 0;
-  }
-`;
-
-export const SubmenuItems = styled.ul`
-  display: ${(props) => (props.$isSubmenuOpen ? "block" : "none")};
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background: ${theme.colors.white};
-  width: 170px;
-  text-align: center;
-  list-style: none;
-  padding: ${theme.padding.small} 0;
-  margin-top: 17px;
-
-  li {
-    padding: ${theme.padding.small} ${theme.padding.medium};
-    border-bottom: ${theme.borderBottom};
-
-    p {
-      margin: 0;
-    }
-
-    &:hover {
-      p {
-        margin-left: 30px;
-        color: ${theme.colors.gray};
-      }
-    }
-
-    &:last-child {
-      border-bottom: none;
-    }
-  }
-
-  @media (max-width: 768px) {
-    display: ${(props) => (props.$isSubmenuOpen ? "block" : "none")};
-  }
-`;
-
-export const MobileMenuItem = styled.ul`
+export const MobileMenuItem = styled.div`
   padding: 10px;
   cursor: pointer;
-  background-color: ${(props) => (props.$active ? "#f0f0f0" : "white")};
-  border-bottom: ${theme.borderBottom};
+`;
+
+export const NavbarHeader = styled.div`
+  display: flex;
   width: 100%;
+  min-height: 56px;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: ${theme.borderBottom};
+  padding: 12px 20px;
+`;
 
-  &:hover {
-    background-color: #f0f0f0;
-  }
+export const Row = styled.div`
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  width: 200px;
+  align-self: end;
+  gap: 12px;
+`;
 
-  li {
-    &:last-child {
-      border-bottom: none;
-    }
-  }
+export const ArrowIcon = styled.img`
+  width: 10px;
+  margin-left: 3px;
+`;
+
+export const MobileSubMenuItem = styled.div`
+  display: ${(props) => (props.$isSubmenuOpen ? "flex" : "none")};
+  flex-direction: column;
+  gap: 8px;
 
   span {
-    margin-left: 12px;
+    padding: 12px;
+    &:hover {
+      margin-left: 12px;
+      color: ${theme.colors.gray};
+    }
   }
-`;
-
-export const MobileMenuItemWrapper = styled.div`
-  width: 100%;
-  /* text-align: center; */
-`;
-
-export const Icon = styled.img`
-  height: 20px;
-  margin-left: 12px;
 `;

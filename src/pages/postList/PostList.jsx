@@ -53,7 +53,11 @@ const PostList = () => {
                 <ModalDetail>
                   <strong>Author:</strong> {selectedPost.autor}
                 </ModalDetail>
-                <ModalImage src={selectedPost.img} alt={selectedPost.title} />
+                <ModalImage
+                  src={selectedPost.img}
+                  srcSet={`${selectedPost.img} 1x, ${selectedPost.img_2x} 2x`}
+                  alt={selectedPost.title}
+                />
                 <ModalDetail>
                   <strong>Date:</strong> {selectedPost.date}
                 </ModalDetail>

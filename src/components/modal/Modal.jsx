@@ -107,10 +107,4 @@ Modal.propTypes = {
   footer: PropTypes.bool,
 };
 
-Modal.defaultProps = {
-  $centered: false,
-  className: "",
-  overlayClassName: "",
-};
-
 export default Modal;

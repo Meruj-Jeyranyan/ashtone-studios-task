@@ -16,7 +16,11 @@ const Card = ({ data, onClick }) => {
     <Container>
       {data?.map((item, index) => (
         <CardContainer key={index} onClick={() => onClick(item)}>
-          <Image src={item.img} alt={item.title} />
+          <Image
+            src={item.img}
+            srcSet={`${item.img} 1x, ${item.img_2x} 2x`}
+            alt={item.title}
+          />
           <Tags>{item.tags}</Tags>
           <Title>{item.title}</Title>
           <Row>
@@ -39,6 +43,7 @@ Card.propTypes = {
       tags: PropTypes.string,
       author: PropTypes.string,
       img: PropTypes.string,
+      img_2x: PropTypes.string,
       date: PropTypes.string,
       views: PropTypes.string,
     })

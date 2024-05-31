@@ -52,20 +52,39 @@ export const MenuItems = styled.div`
 
 export const MenuItem = styled.div`
   margin: 0 10px;
+  position: relative;
   cursor: pointer;
 `;
 
 export const SubMenu = styled.div`
   display: ${(props) => (props.$isSubmenuOpen ? "block" : "none")};
   position: absolute;
-  top: 0;
-  left: 0;
-  background-color: #444;
-  padding: 10px;
+  background-color: ${theme.colors.white};
+  padding: 0 10px;
   z-index: 1000;
 
-  width: 150px;
-  margin-top: 5px;
+  width: 180px;
+  margin-top: 15px;
+
+  div {
+    border-bottom: ${theme.borderBottom};
+    padding: 4px 6px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  span {
+    padding: 4px 0;
+    &:hover {
+      margin-left: 12px;
+      color: ${theme.colors.gray};
+    }
+  }
 `;
 
 export const BurgerIcon = styled.img`

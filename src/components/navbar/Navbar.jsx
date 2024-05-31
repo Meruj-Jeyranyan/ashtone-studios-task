@@ -158,10 +158,8 @@ const Navbar = () => {
               <SubMenu $isSubmenuOpen={openSubmenuIndex === index}>
                 {menuItem.subItems?.map((subItem, subIndex) => (
                   <div key={subIndex}>
-                    <span>
-                      {subItem}
-                      <ArrowIcon src={arrowRight} alt="icon" />
-                    </span>
+                    <span>{subItem}</span>
+                    <ArrowIcon src={arrowRight} alt="icon" />
                   </div>
                 ))}
               </SubMenu>

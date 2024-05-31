@@ -23,11 +23,6 @@ export const NavbarContainer = styled.div`
   @media (min-width: 768px) {
     border-bottom: ${theme.borderBottom};
     min-height: 110px;
-
-    &:nth-child(2) {
-      margin: 0 auto; /* Center the second item */
-      flex: 0 1 auto;
-    }
   }
 
   @media (max-width: 768px) {
@@ -58,17 +53,12 @@ export const MenuItems = styled.div`
 export const MenuItem = styled.div`
   margin: 0 10px;
   cursor: pointer;
-  position: relative;
-
-  &:hover > div {
-    display: block;
-  }
 `;
 
 export const SubMenu = styled.div`
   display: ${(props) => (props.$isSubmenuOpen ? "block" : "none")};
   position: absolute;
-  top: 100%;
+  top: 0;
   left: 0;
   background-color: #444;
   padding: 10px;
